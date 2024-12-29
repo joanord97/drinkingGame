@@ -1,0 +1,20 @@
+name: Deploy Supabase Functions
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'supabase/functions/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: supabase/setup-cli@v1
+      - run: |
+          supabase login
+          supabase functions deploy check-game-start
+      env:
+        SUPABASE_URL: ${{ env.SUPABASE_URL }} 
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }} 
